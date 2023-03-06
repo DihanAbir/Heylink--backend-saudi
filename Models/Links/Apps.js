@@ -12,6 +12,7 @@ const appsSchema = mongoose.Schema(
       {
         type: ObjectId,
         ref: "User",
+        required: [true, "userInfo is required"],
       },
     ],
   },

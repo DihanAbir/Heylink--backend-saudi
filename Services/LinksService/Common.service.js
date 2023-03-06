@@ -19,6 +19,7 @@ exports.createCommonService = async (bodyData, ActionName, imageFile) => {
     const result = await social.create(bodyData);
     return result;
   } else if (ActionName === "gallery") {
+
     let img = fs.readFileSync(imageFile.path);
 
     const result = await gallery.create({
@@ -52,44 +53,86 @@ exports.createCommonService = async (bodyData, ActionName, imageFile) => {
 exports.getCommonService = async (ActionName, userID) => {
   if (ActionName === "common") {
     const result = await common.find();
-    const a = result.filter((url) => {
+    const data = result.filter((url) => {
       const id = JSON.stringify(url?.userInfo[0]);
       if (id === JSON.stringify(userID)) {
         return url;
       }
     });
 
-    return a;
+    return data;
   } else if (ActionName === "social") {
     const result = await social.find();
-    const a = result.filter((url) => {
+    const data = result.filter((url) => {
       const id = JSON.stringify(url?.userInfo[0]);
       if (id === JSON.stringify(userID)) {
         return url;
       }
     });
-    return a;
+    return data;
   } else if (ActionName === "gallery") {
     const result = await gallery.find();
-    return result;
+    const data = result.filter((url) => {
+      const id = JSON.stringify(url?.userInfo[0]);
+      if (id === JSON.stringify(userID)) {
+        return url;
+      }
+    });
+    return data;
   } else if (ActionName === "menu") {
     const result = await menu.find();
-    return result;
+    const data = result.filter((url) => {
+      const id = JSON.stringify(url?.userInfo[0]);
+      if (id === JSON.stringify(userID)) {
+        return url;
+      }
+    });
+    return data;
   } else if (ActionName === "crypto") {
     const result = await crypto.find();
-    return result;
+    const data = result.filter((url) => {
+      const id = JSON.stringify(url?.userInfo[0]);
+      if (id === JSON.stringify(userID)) {
+        return url;
+      }
+    });
+    return data;
   } else if (ActionName === "location") {
     const result = await location.find();
-    return result;
+    const data = result.filter((url) => {
+      const id = JSON.stringify(url?.userInfo[0]);
+      if (id === JSON.stringify(userID)) {
+        return url;
+      }
+    });
+    return data;
   } else if (ActionName === "music") {
     const result = await music.find();
-    return result;
+    const data = result.filter((url) => {
+      const id = JSON.stringify(url?.userInfo[0]);
+      if (id === JSON.stringify(userID)) {
+        return url;
+      }
+    });
+    return data;
   } else if (ActionName === "commerce") {
     const result = await commerce.find();
-    return result;
+    const data = result.filter((url) => {
+      const id = JSON.stringify(url?.userInfo[0]);
+      if (id === JSON.stringify(userID)) {
+        return url;
+      }
+    });
+    return data;
   } else if (ActionName === "apps") {
     const result = await apps.find();
-    return result;
+    const data = result.filter((url) => {
+      const id = JSON.stringify(url?.userInfo[0]);
+      if (id === JSON.stringify(userID)) {
+        return url;
+      }
+    });
+    return data;
   }
 };
 
@@ -132,11 +175,37 @@ exports.deleteCommonService = async (ActionName, id) => {
     const result = await social.deleteOne({ _id: id });
     return result;
   } else if (ActionName === "gallery") {
+    const result2 = await gallery.find({
+      item: { $elemMatch: { _id: id } },
+    });
+
+    console.log(result2);
+    let bankId = JSON.stringify(result2[0]?._id);
+    const stringWithoutQuotes = bankId?.replace(/"/g, "");
+    console.log(stringWithoutQuotes);
+
+    const deleteResult = await gallery.updateOne(
+      { _id: stringWithoutQuotes },
+      { $set: { item: { _id: id } } }
+    );
     const result = await gallery.deleteOne({ _id: id });
-    return result;
+    return { result, deleteResult };
   } else if (ActionName === "menu") {
+    const result2 = await menu.find({
+      item: { $elemMatch: { _id: id } },
+    });
+
+    console.log(result2);
+    let bankId = JSON.stringify(result2[0]?._id);
+    const stringWithoutQuotes = bankId?.replace(/"/g, "");
+    console.log(stringWithoutQuotes);
+
+    const deleteResult = await menu.updateOne(
+      { _id: stringWithoutQuotes },
+      { $set: { item: { _id: id } } }
+    );
     const result = await menu.deleteOne({ _id: id });
-    return result;
+    return { result, deleteResult };
   } else if (ActionName === "crypto") {
     const result = await crypto.deleteOne({ _id: id });
     return result;
@@ -161,7 +230,8 @@ exports.patchCommonByIdService = async (
   patchData,
   imageFile
 ) => {
-  let img = fs.readFileSync(imageFile.path);
+  console.log(patchData, imageFile);
+
   if (ActionName === "common") {
     if (imageFile === undefined) {
       const result = await common.updateOne(
@@ -171,6 +241,7 @@ exports.patchCommonByIdService = async (
       );
       return result;
     } else {
+      let img = fs.readFileSync(imageFile.path);
       const data = {
         image: {
           data: img,
@@ -192,18 +263,28 @@ exports.patchCommonByIdService = async (
     );
     return result;
   } else if (ActionName === "gallery") {
-    const data = {
-      image: {
-        data: imageFile.filename,
-        contentType: imageFile.originalname,
-      },
-    };
-    const result = await gallery.updateOne(
-      { _id: userId },
-      { $set: data },
-      { runValidators: true }
-    );
-    return result;
+    if (imageFile === undefined) {
+      const result = await gallery.updateOne(
+        { _id: userId },
+        { $set: patchData },
+        { runValidators: true }
+      );
+      return result;
+    } else {
+      let img = fs.readFileSync(imageFile.path);
+      const data = {
+        image: {
+          data: img,
+          contentType: imageFile.originalname,
+        },
+      };
+      const result = await gallery.updateOne(
+        { _id: userId },
+        { $set: data },
+        { runValidators: true }
+      );
+      return result;
+    }
   } else if (ActionName === "menu") {
     const result = await menu.updateOne(
       { _id: userId },
@@ -219,12 +300,28 @@ exports.patchCommonByIdService = async (
     );
     return result;
   } else if (ActionName === "location") {
-    const result = await location.updateOne(
-      { _id: userId },
-      { $set: patchData },
-      { runValidators: true }
-    );
-    return result;
+    if (imageFile === undefined) {
+      const result = await location.updateOne(
+        { _id: userId },
+        { $set: patchData },
+        { runValidators: true }
+      );
+      return result;
+    } else {
+      let img = fs.readFileSync(imageFile.path);
+      const data = {
+        image: {
+          data: img,
+          contentType: imageFile.originalname,
+        },
+      };
+      const result = await location.updateOne(
+        { _id: userId },
+        { $set: data },
+        { runValidators: true }
+      );
+      return result;
+    }
   } else if (ActionName === "music") {
     const result = await music.updateOne(
       { _id: userId },

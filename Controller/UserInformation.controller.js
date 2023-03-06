@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const {
   signupService,
   loginService,
+  patchUserIdService,
 } = require("../Services/UserInformation.service");
 const { generateToken } = require("../utils/token");
 
@@ -75,7 +76,6 @@ exports.login = async (req, res) => {
 
 exports.getUserInfo = async (req, res) => {
   try {
-  
     const result = await loginService(req.user?.email);
     res.status(200).json({
       status: "success",
@@ -85,6 +85,25 @@ exports.getUserInfo = async (req, res) => {
     res.status(400).json({
       status: "error",
       message: "Data couldn't insert",
+      error: error.message,
+    });
+  }
+};
+
+exports.patchUserById = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const imageFile = req.file;
+    const result = await patchUserIdService(id, req.body, imageFile);
+    res.status(200).json({
+      status: "success",
+      message: "Update successfully",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).json({
+      status: "error",
+      message: "upadate couldn't success",
       error: error.message,
     });
   }

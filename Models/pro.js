@@ -1,8 +1,17 @@
 const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
-const commerceSchema = mongoose.Schema(
+const proSchema = mongoose.Schema(
   {
-    link: {
+    subscriptionplane: {
+      type: String,
+    },
+    price: {
+      type: String,
+    },
+    country: {
+      type: String,
+    },
+    discountcode: {
       type: String,
     },
     userInfo: [
@@ -19,5 +28,5 @@ const commerceSchema = mongoose.Schema(
   }
 );
 
-const commerce = mongoose.model("commerce", commerceSchema);
-module.exports = commerce;
+const pro = mongoose.model("pro", proSchema);
+module.exports = pro;

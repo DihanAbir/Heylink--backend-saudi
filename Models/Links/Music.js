@@ -5,10 +5,22 @@ const musicSchema = mongoose.Schema(
     link: {
       type: String,
     },
+    title: {
+      type: String,
+    },
+    name: {
+      type: String,
+    },
+    show: {
+      type: String,
+      enum: ["true", "false"],
+      default: "true",
+    },
     userInfo: [
       {
         type: ObjectId,
         ref: "User",
+        required: [true, "userInfo is required"],
       },
     ],
   },

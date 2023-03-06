@@ -11,10 +11,16 @@ const socialSchema = mongoose.Schema(
     link: {
       type: String,
     },
+    bottom: {
+      type: String,
+      enum: ["button", "icon"],
+      default: "button",
+    },
     userInfo: [
       {
         type: ObjectId,
         ref: "User",
+        required: [true, "userInfo is required"],
       },
     ],
   },

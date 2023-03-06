@@ -39,6 +39,42 @@ const userSchema = mongoose.Schema(
       enum: ["active", "inactive", "blocked"],
       default: "active",
     },
+
+    image: {
+      data: Buffer,
+      contentType: String,
+    },
+    profiletitle: {
+      type: String,
+    },
+    quicklyjump: {
+      type: String,
+    },
+
+    shortcut: {
+      type: String,
+      enum: ["true", "false"],
+      default: "false",
+    },
+
+    qrCode: {
+      type: String,
+      enum: ["true", "false"],
+      default: "false",
+    },
+
+    customeAvators: {
+      type: String,
+    },
+
+    them: {
+      type: String,
+    },
+    footer: {
+      type: String,
+      enum: ["true", "false"],
+      default: "false",
+    },
     passwordChangeAt: Date,
     passwordResetToken: String,
     passwordResetExpires: Date,
