@@ -5,17 +5,16 @@ const socialSchema = mongoose.Schema(
     name: {
       type: String,
     },
+    // image: {
+    //   type: String,
+    // },
     link: {
       type: String,
     },
-    image: {
-      type: String,
-      required: true
-    },
-
     bottom: {
       type: String,
-      default: "icon",
+      enum: ["button", "icon"],
+      default: "button",
     },
     userInfo: [
       {

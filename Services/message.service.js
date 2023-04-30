@@ -6,8 +6,15 @@ exports.createMessageService = async (data) => {
 };
 
 exports.getMessageService = async (userId) => {
-  const result = await message.find({ userInfo: [id] });
-  return result;
+  const result = await message.find();
+  const data = result.filter((url) => {
+    const id = JSON.stringify(url?.userInfo[0]);
+    if (id === JSON.stringify(userId)) {
+      return url;
+    }
+  });
+
+  return data;
 };
 
 exports.deleteMessageServiceById = async (id) => {
@@ -16,7 +23,7 @@ exports.deleteMessageServiceById = async (id) => {
 };
 
 exports.patchMessageServiceById = async (proId, patchData) => {
-  // console.log(proId.patchData);
+  console.log(proId.patchData);
   console.log(patchData);
   const result = await message.updateOne(
     { _id: proId },

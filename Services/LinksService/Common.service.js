@@ -52,15 +52,15 @@ exports.createCommonService = async (bodyData, ActionName, imageFile) => {
 
 exports.getCommonService = async (ActionName, userID) => {
   if (ActionName === "common") {
-    // const result = await common.find();
-    // const data = result.filter((url) => {
-    //   const id = JSON.stringify(url?.userInfo[0]);
-    //   if (id === JSON.stringify(userID)) {
-    //     return url;
-    //   }
-    // });
+    const result = await common.find();
+    const data = result.filter((url) => {
+      const id = JSON.stringify(url?.userInfo[0]);
+      if (id === JSON.stringify(userID)) {
+        return url;
+      }
+    });
 
-    // return data;
+    return data;
   } else if (ActionName === "social") {
     const result = await social.find();
     const data = result.filter((url) => {
@@ -138,8 +138,8 @@ exports.getCommonService = async (ActionName, userID) => {
 
 exports.getCommonServiceById = async (ActionName, id) => {
   if (ActionName === "common") {
-    // const result = await common.findById(id);
-    // return result;
+    const result = await common.findById(id);
+    return result;
   } else if (ActionName === "social") {
     const result = await social.findById(id);
     return result;
@@ -169,8 +169,8 @@ exports.getCommonServiceById = async (ActionName, id) => {
 
 exports.deleteCommonService = async (ActionName, id) => {
   if (ActionName === "common") {
-    // const result = await common.deleteOne({ _id: id });
-    // return result;
+    const result = await common.deleteOne({ _id: id });
+    return result;
   } else if (ActionName === "social") {
     const result = await social.deleteOne({ _id: id });
     return result;
@@ -233,28 +233,28 @@ exports.patchCommonByIdService = async (
   console.log(patchData, imageFile);
 
   if (ActionName === "common") {
-    // if (!imageFile) {
-    //   const result = await common.updateOne(
-    //     { _id: userId },
-    //     { $set: patchData },
-    //     { runValidators: true }
-    //   );
-    //   return result;
-    // } else {
-    //   // let img = fs.readFileSync(imageFile.path);
-    //   // const data = {
-    //   //   image: {
-    //   //     data: img,
-    //   //     contentType: imageFile.originalname,
-    //   //   },
-    //   // };
-    //   const result = await common.updateOne(
-    //     { _id: userId },
-    //     { $set: imageFile },
-    //     { runValidators: true }
-    //   );
-    //   return result;
-    // }
+    if (!imageFile) {
+      const result = await common.updateOne(
+        { _id: userId },
+        { $set: patchData },
+        { runValidators: true }
+      );
+      return result;
+    } else {
+      // let img = fs.readFileSync(imageFile.path);
+      // const data = {
+      //   image: {
+      //     data: img,
+      //     contentType: imageFile.originalname,
+      //   },
+      // };
+      const result = await common.updateOne(
+        { _id: userId },
+        { $set: imageFile },
+        { runValidators: true }
+      );
+      return result;
+    }
   } else if (ActionName === "social") {
     const result = await social.updateOne(
       { _id: userId },

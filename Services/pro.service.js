@@ -6,8 +6,15 @@ exports.createProService = async (data) => {
 };
 
 exports.getProService = async (userId) => {
-  const result = await pro.find({ userInfo: [id] });
-  return result;
+  const result = await pro.find();
+  const data = result.filter((url) => {
+    const id = JSON.stringify(url?.userInfo[0]);
+    if (id === JSON.stringify(userId)) {
+      return url;
+    }
+  });
+
+  return data;
 };
 
 exports.patchProServiceById = async (proId, patchData) => {

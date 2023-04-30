@@ -22,9 +22,9 @@ const addMessage = async (req, res, next) => {
 const getMessages = async (req, res) => {
     // console.log(req.params);
     try {
-        const { _id } = req?.user;
-        const result = await allMessages.find({ userInfo: [_id] })
-        // console.log(result);
+        const id = req.params.id;
+        const result = await allMessages.find({ userInfo: [id] })
+
         res.status(200).json({
             status: "success",
             message: "Data get successfully",
@@ -40,10 +40,9 @@ const getMessages = async (req, res) => {
 };
 
 
-const deleteMessage = async (req, res) => {
+const deleteMessage = async (req, res, next) => {
     try {
         const id = req.params.id;
-        // console.log(id);
         const result = await allMessages.deleteOne({ _id: id });
         res.status(200).json({
             status: "success",
