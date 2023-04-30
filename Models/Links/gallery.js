@@ -2,10 +2,10 @@ const mongoose = require("mongoose");
 const { ObjectId } = mongoose.Schema.Types;
 const gallerySchema = mongoose.Schema(
   {
-    image: {
-      data: Buffer,
-      contentType: String,
-    },
+    // image: {
+    //   data: Buffer,
+    //   contentType: String,
+    // },
 
     title: {
       type: String,

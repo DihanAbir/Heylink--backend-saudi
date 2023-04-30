@@ -11,7 +11,6 @@ const locationSchema = mongoose.Schema(
     },
 
     image: {
-      data: Buffer,
       contentType: String,
     },
 

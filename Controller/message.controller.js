@@ -1,6 +1,6 @@
+const message = require("../Models/message");
 const {
   createMessageService,
-  getMessageService,
   deleteMessageServiceById,
   patchMessageServiceById,
 } = require("../Services/message.service");
@@ -8,7 +8,7 @@ const {
 exports.createMessage = async (req, res, next) => {
   try {
     const result = await createMessageService(req.body);
-
+    c
     res.status(200).json({
       status: "success",
       message: "Data inserted successfully",
@@ -25,9 +25,9 @@ exports.createMessage = async (req, res, next) => {
 
 exports.getMessage = async (req, res, next) => {
   try {
-    const userId = req.user?._id;
-    const result = await getMessageService(userId);
-
+    const id = req.user?._id;
+    const result = await message.find({ userInfo: [id] });
+    // console.log(result);
     res.status(200).json({
       status: "success",
       message: "Data get successfully",

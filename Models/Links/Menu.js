@@ -25,10 +25,10 @@ const menuSchema = mongoose.Schema(
       },
     ],
 
-    image: {
-      data: Buffer,
-      contentType: String,
-    },
+    // image: {
+    //   data: Buffer,
+    //   contentType: String,
+    // },
     userInfo: [
       {
         type: ObjectId,

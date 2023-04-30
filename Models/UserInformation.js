@@ -32,6 +32,9 @@ const userSchema = mongoose.Schema(
 
     username: {
       type: String,
+      trim: true,
+      lowercase: true,
+      unique: true,
     },
 
     status: {
@@ -41,7 +44,6 @@ const userSchema = mongoose.Schema(
     },
 
     image: {
-      data: Buffer,
       contentType: String,
     },
     profiletitle: {
@@ -70,6 +72,27 @@ const userSchema = mongoose.Schema(
     them: {
       type: String,
     },
+
+    backgroundColor: {
+      type: String,
+      default: "#FFB219"
+    },
+
+    pageTextColor: {
+      type: String,
+      default: "#000000"
+    },
+
+    buttonBackgroundColor: {
+      type: String,
+      default: "#FFFFFF"
+    },
+
+    buttonTextColor: {
+      type: String,
+      default: "#000000"
+    },
+
     footer: {
       type: String,
       enum: ["true", "false"],

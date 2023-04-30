@@ -9,7 +9,6 @@ const linksSchema = mongoose.Schema(
       type: String,
     },
     image: {
-      data: Buffer,
       contentType: String,
     },
     activeFrom: {
