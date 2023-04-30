@@ -2,10 +2,11 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
-
+const morgan = require("morgan");
 // thard party middleWare
 app.use(cors());
 app.use(express.json());
+app.use(morgan("short"));
 
 // route
 const viewRoute = require("./Routes/Links/viewRoute");
