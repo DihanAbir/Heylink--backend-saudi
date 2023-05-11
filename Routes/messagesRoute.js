@@ -6,9 +6,10 @@ const router = express.Router();
 router
     .route("/")
     .post(addMessage)
+    .get(verifyToken, getMessages)
+
 router
     .route("/:id")
-    .get(verifyToken, getMessages)
     .delete(verifyToken, deleteMessage)
 
 module.exports = router;

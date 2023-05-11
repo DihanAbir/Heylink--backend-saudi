@@ -2,6 +2,7 @@ const User = require("../Models/UserInformation");
 const fs = require("fs");
 exports.signupService = async (userInfo) => {
   const result = await User.create(userInfo);
+  console.log(result);
   return result;
 };
 

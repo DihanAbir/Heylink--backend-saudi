@@ -24,11 +24,11 @@ exports.getViewData = async (req, res) => {
         const [commonData, socialData, locationData, messageData] = await Promise.all([
             common.find({ userInfo: [id] }),
             social.find({ userInfo: [id] }),
+            location.find({ userInfo: [id] }),
+            message.find({ userInfo: [id] }),
             // gallery.find({ userInfo: [id] }),
             // menu.find({ userInfo: [id] }),
-            location.find({ userInfo: [id] }),
             // music.find({ userInfo: [id] }),
-            message.find({ userInfo: [id] }),
         ]);
         // galleryData, menuData,musicData,
         const result = { userData, commonData, socialData, locationData, messageData };

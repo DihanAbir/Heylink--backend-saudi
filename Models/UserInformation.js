@@ -16,7 +16,7 @@ const userSchema = mongoose.Schema(
 
     password: {
       type: String,
-      required: [true, "Password is required"],
+      required: [false, "Password is required"],
       //   validate: {
       //     validator: (value) =>
       //       validator.isStrongPassword(value, {
@@ -28,6 +28,15 @@ const userSchema = mongoose.Schema(
 
     role: {
       type: String,
+    },
+    verified: {
+      type: String,
+      enum: ["true", "false"],
+      default: "false",
+    },
+    createWith: {
+      type: String,
+      required: false
     },
 
     username: {
@@ -109,10 +118,16 @@ const userSchema = mongoose.Schema(
 // password hashing
 userSchema.pre("save", function (next) {
   const password = this.password;
-  const hashedPassword = bcryptjs.hashSync(password);
-  this.password = hashedPassword;
-  this.confirmPassword = undefined;
-  next();
+  if (password) {
+    const hashedPassword = bcryptjs.hashSync(password);
+    this.password = hashedPassword;
+    this.confirmPassword = undefined;
+    next();
+  }
+  else {
+    next()
+  }
+
 });
 
 userSchema.methods.comparePassword = function (password, hash) {
