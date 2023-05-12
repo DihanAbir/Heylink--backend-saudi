@@ -10,7 +10,7 @@ mongoose.connect('mongodb+srv://heylink:762485@cluster0.xwegazm.mongodb.net/heyl
 });
 
 // server port
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 7221;
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`.red.bold);
